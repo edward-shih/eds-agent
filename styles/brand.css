@@ -1,0 +1,21 @@
+:root {
+  --heading-font-family: "Syncopate", sans-serif;
+  --body-font-family: "Instrument Sans", sans-serif;
+  --background-color: rgb(255 255 255);
+  --text-color: rgb(0 0 0);
+  --link-color: rgb(102 102 102);
+  --link-hover-color: rgb(0 0 0);
+  --section-light-color: rgb(245 245 245);
+  --section-dark-color: rgb(0 0 0);
+  --section-padding: 128px;
+  --nav-height: 64px;
+  --content-max-width: 1200px;
+
+  /* heading sizes - desktop */
+  --heading-size-xxl: 56px;
+  --heading-size-xl: 40px;
+  --heading-size-l: 28px;
+  --heading-size-m: 18px;
+  --heading-size-s: 16px;
+  --heading-size-xs: 14px;
+}

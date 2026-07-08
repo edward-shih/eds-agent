@@ -1,0 +1,38 @@
+{
+  "variantName": "columns-gallery",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-07-08T21:12:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd-trendsetters.site",
+    "originPage": "WKND Trendsetters homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "gallery",
+    "imagePattern": "grid"
+  },
+  "contentPattern": {
+    "structure": "grid of uniform square images (no per-item text)",
+    "buttonCount": 0,
+    "imageCount": 8
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "photo galleries with uniform square images",
+      "image-only grids with no per-item text",
+      "visual snapshot / inspiration grids"
+    ],
+    "notSuitableFor": [
+      "image + text article grids (use cards)",
+      "single featured image beside text (use columns-article)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-08T21:12:00.000Z"
+  }
+}

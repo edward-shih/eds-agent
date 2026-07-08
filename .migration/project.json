@@ -1,0 +1,10 @@
+{
+  "type": "doc",
+  "sites": {
+    "eds-agent": {
+      "previewOrg": "edward-shih",
+      "previewSite": "eds-agent",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  }
+}
