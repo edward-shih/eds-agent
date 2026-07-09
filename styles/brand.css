@@ -1,0 +1,24 @@
+:root {
+  /* Source site uses commercial Gilroy fonts (not redistributable);
+     Source Sans Pro is the site's own loaded fallback and is used here. */
+  --heading-font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", arial, sans-serif;
+  --body-font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", arial, sans-serif;
+  --background-color: rgb(255 255 255);
+  --text-color: rgb(0 0 0);
+  --link-color: rgb(0 0 0);
+  --link-hover-color: rgb(246 11 69);
+  --brand-red: rgb(246 11 69);
+  --section-light-color: rgb(245 245 245);
+  --section-dark-color: rgb(246 11 69);
+  --section-padding: 48px;
+  --nav-height: 80px;
+  --content-max-width: 1200px;
+
+  /* heading sizes - desktop */
+  --heading-size-xxl: 48px;
+  --heading-size-xl: 36px;
+  --heading-size-l: 32px;
+  --heading-size-m: 20px;
+  --heading-size-s: 16px;
+  --heading-size-xs: 14px;
+}

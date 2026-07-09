@@ -1,0 +1,123 @@
+.form.block {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.form.block .form-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.form.block .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form.block .form-field label {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.form.block .form-field label.required::after {
+  content: ' *';
+  color: var(--brand-red);
+}
+
+.form.block .form-field input,
+.form.block .form-field select,
+.form.block .form-field textarea {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: var(--text-color);
+  padding: 12px 14px;
+  border: 1px solid rgb(0 0 0 / 25%);
+  border-radius: 4px;
+  background-color: rgb(255 255 255);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form.block .form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* checkbox row: control + label inline */
+.form.block .form-field-checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.form.block .form-field-checkbox input {
+  width: auto;
+  margin-top: 3px;
+}
+
+.form.block .form-field-checkbox label {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.form.block .form-field input:focus,
+.form.block .form-field select:focus,
+.form.block .form-field textarea:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 1px;
+  border-color: var(--brand-red);
+}
+
+.form.block .form-actions {
+  margin-top: 8px;
+}
+
+.form.block .form-actions button {
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgb(255 255 255);
+  background-color: var(--brand-red);
+  border: none;
+  border-radius: 36px;
+  padding: 14px 44px;
+  cursor: pointer;
+}
+
+.form.block .form-actions button:hover {
+  background-color: rgb(0 0 0);
+}
+
+.form.block .form-actions button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.form.block .form-status {
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  margin: 4px 0 0;
+}
+
+.form.block .form-status:empty {
+  display: none;
+}
+
+/* two-up rows on wider screens */
+@media (width >= 600px) {
+  .form.block .form-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form.block .form-field-textarea,
+  .form.block .form-field-checkbox,
+  .form.block .form-actions,
+  .form.block .form-status {
+    grid-column: 1 / -1;
+  }
+}

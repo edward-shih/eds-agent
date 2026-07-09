@@ -153,6 +153,46 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "contact-us",
+      "urls": [
+        "https://www.kellanovaawayfromhome.com/en-us/contact-us.html"
+      ],
+      "representativeUrl": "https://www.kellanovaawayfromhome.com/en-us/contact-us.html",
+      "coverageGaps": [],
+      "description": "Contact Us page: centered intro heading + paragraph with phone number, followed by a multi-field contact form (name, email, phone, title, segment/distributor/state dropdowns, address, comments, consent checkbox, submit)",
+      "blocks": [
+        {
+          "name": "form",
+          "instances": [
+            "#skip-main-content div.contact-field.contact-us-style"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "cu-intro",
+          "name": "Intro",
+          "selector": "#skip-main-content div.content_wrapper",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content div.content_wrapper h1",
+            "#skip-main-content div.content_wrapper p"
+          ]
+        },
+        {
+          "id": "cu-form",
+          "name": "Contact form",
+          "selector": "#skip-main-content div.contact-field.contact-us-style",
+          "style": null,
+          "blocks": [
+            "form"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

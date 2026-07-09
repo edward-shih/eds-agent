@@ -29,6 +29,12 @@ export default function transform(hookName, element, payload) {
       '#CybotCookiebotDialog',
       '[class*="cookie-consent"]',
       '[id*="cookie-consent"]',
+      // Contact form JS-only chrome: hidden success/error toasts and spinner.
+      // The migrated form block renders its own status message, so these
+      // source-only elements must not survive into imported content.
+      '.message',
+      '.message-error',
+      '.loader',
     ]);
 
     // NOTE: cleaned.html has an empty leading <div class="markuptext ...">.
