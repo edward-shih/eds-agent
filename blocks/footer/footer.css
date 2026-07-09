@@ -1,20 +1,69 @@
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
 }
 
 footer .footer > div {
-  margin: auto;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  margin: 0 auto;
+  padding: 48px 24px 40px;
+  text-align: center;
 }
 
-footer .footer p {
+footer .footer ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+footer .footer ul li {
+  display: inline-block;
+  margin: 0 8px;
+  padding: 4px 0;
+}
+
+footer .footer a:any-link {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* main navigation row */
+footer .footer .footer-nav a {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* copyright line */
+footer .footer .footer-copyright {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+footer .footer .footer-copyright p {
+  margin: 16px 0;
+  font-size: 16px;
+}
+
+/* secondary legal navigation */
+footer .footer .footer-legal {
+  padding-top: 8px;
+}
+
+footer .footer .footer-legal a {
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+/* hover states */
+footer .footer .footer-nav a:hover,
+footer .footer .footer-legal a:hover {
+  color: var(--brand-red);
 }
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
