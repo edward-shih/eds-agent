@@ -66,12 +66,12 @@ function decorateDrop(li, nav) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navMeta = getMetadata('header') || getMetadata('nav');
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/header';
 
   // dual-fetch: localhost/aem up serves the content path; DA/EDS serves navPath.plain.html
   let navBase = '/content/';
-  let resp = await fetch('/content/nav.plain.html');
+  let resp = await fetch('/content/header.plain.html');
   if (!resp.ok) {
     resp = await fetch(`${navPath}.plain.html`);
     navBase = `${navPath.substring(0, navPath.lastIndexOf('/') + 1)}`;
@@ -113,7 +113,9 @@ export default async function decorate(block) {
         toggle.type = 'button';
         toggle.className = 'nav-drop-toggle';
         toggle.setAttribute('aria-label', 'Toggle submenu');
-        li.querySelector(':scope > a').after(toggle);
+        // the top-level link may be wrapped in a <p> (DA export) or be a direct child
+        const topLink = li.querySelector(':scope > a, :scope > p > a');
+        (topLink.closest('p') || topLink).after(toggle);
         decorateDrop(li, nav);
       }
     });

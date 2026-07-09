@@ -1,27 +1,103 @@
+/* cards-segments: icon grid of segment links.
+   Source: .segment-nav — flex-wrap grid of circular colored icons with a label.
+   Decorated EDS DOM:
+   .cards-segments > ul > li
+     > .cards-segments-card-image  (picture > img : circular colored SVG icon)
+     > .cards-segments-card-body   (a : segment label link)
+*/
+
 .cards-segments > ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px; /* source 1em @16px */
+  margin: 0 -8px; /* source 0 -0.5em */
+  padding: 32px 0; /* source 2em 0 */
   list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  text-align: center;
 }
 
+/* each card is the flex item (source: the <a>) */
 .cards-segments > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+  position: relative;
+  flex-basis: calc(33.33% - 16px); /* mobile: 3 columns */
+  max-width: 192px; /* source 12em */
+  margin: 0;
+  border: 0;
+  background-color: transparent;
 }
 
-.cards-segments .cards-segments-card-body {
-  margin: 16px;
-}
-
+/* circular colored icon (SVG already carries the colored background + white line art) */
 .cards-segments .cards-segments-card-image {
   line-height: 0;
 }
 
-.cards-segments > ul > li img {
+.cards-segments .cards-segments-card-image img {
+  display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  border-radius: 50%;
+  object-fit: fill;
+  overflow: hidden;
+}
+
+/* label */
+.cards-segments .cards-segments-card-body {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s); /* 16px */
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.cards-segments .cards-segments-card-body a:any-link {
+  display: block;
+  padding: 10.56px 0; /* source 0.66em @16px */
+  color: inherit;
+  text-decoration: none;
+}
+
+.cards-segments .cards-segments-card-body a:hover,
+.cards-segments .cards-segments-card-body a:focus-visible {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+/* per-segment icon background colors (fallback behind the SVG's own fill) */
+.cards-segments li:has(a[href*="college"]) .cards-segments-card-image img { background-color: rgb(158 11 69); }
+.cards-segments li:has(a[href*="convenience"]) .cards-segments-card-image img { background-color: rgb(255 105 0); }
+.cards-segments li:has(a[href*="healthcare"]) .cards-segments-card-image img { background-color: rgb(32 92 221); }
+.cards-segments li:has(a[href*="k12"]) .cards-segments-card-image img { background-color: rgb(67 0 128); }
+.cards-segments li:has(a[href*="lodging"]) .cards-segments-card-image img { background-color: rgb(12 179 128); }
+.cards-segments li:has(a[href*="restaurant"]) .cards-segments-card-image img { background-color: rgb(255 196 38); }
+.cards-segments li:has(a[href*="vending"]) .cards-segments-card-image img { background-color: rgb(128 0 255); }
+
+/* small phones: smaller labels (source @max-width 32em -> a { font-size: 0.75em }) */
+@media (width <= 512px) {
+  .cards-segments .cards-segments-card-body {
+    font-size: 12px;
+  }
+}
+
+/* tablet: 4 columns (source @min-width 48em) */
+@media (width >= 768px) {
+  .cards-segments > ul > li {
+    flex-basis: calc(25% - 16px);
+  }
+}
+
+/* desktop: 7 columns, larger gap (source @min-width 64em) */
+@media (width >= 1024px) {
+  .cards-segments > ul {
+    gap: 24px; /* source 1.5em */
+  }
+
+  .cards-segments > ul > li {
+    flex-basis: calc(14.28% - 24px);
+  }
 }
