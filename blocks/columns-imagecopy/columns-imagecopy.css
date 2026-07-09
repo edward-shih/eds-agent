@@ -1,0 +1,33 @@
+.columns-imagecopy > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-imagecopy img {
+  width: 100%;
+}
+
+.columns-imagecopy > div > div {
+  order: 1;
+}
+
+.columns-imagecopy > div > .columns-imagecopy-img-col {
+  order: 0;
+}
+
+.columns-imagecopy > div > .columns-imagecopy-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-imagecopy > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-imagecopy > div > div {
+    flex: 1;
+    order: unset;
+  }
+}

@@ -2,124 +2,54 @@
 /* global WebImporter */
 
 // PARSER IMPORTS
-import heroFeatureParser from './parsers/hero-feature.js';
-import columnsArticleParser from './parsers/columns-article.js';
-import columnsGalleryParser from './parsers/columns-gallery.js';
-import tabsTestimonialParser from './parsers/tabs-testimonial.js';
-import cardsArticleParser from './parsers/cards-article.js';
-import accordionFaqParser from './parsers/accordion-faq.js';
-import heroOverlayParser from './parsers/hero-overlay.js';
+import carouselHeroParser from './parsers/carousel-hero.js';
+import cardsSegmentsParser from './parsers/cards-segments.js';
+import columnsImagecopyParser from './parsers/columns-imagecopy.js';
+import cardsLogosParser from './parsers/cards-logos.js';
+import carouselRecipeParser from './parsers/carousel-recipe.js';
+import columnsSignupParser from './parsers/columns-signup.js';
 
 // TRANSFORMER IMPORTS
-import cleanupTransformer from './transformers/wknd-trendsetters-cleanup.js';
-import sectionsTransformer from './transformers/wknd-trendsetters-sections.js';
+import cleanupTransformer from './transformers/kellanova-cleanup.js';
+import sectionsTransformer from './transformers/kellanova-sections.js';
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
   name: 'homepage',
-  description: 'Fashion blog homepage with hero, featured article, image gallery, testimonials tabs, latest articles cards, FAQ accordion, and CTA sections',
+  description: 'Kellanova Away From Home homepage: hero carousel, segments icon grid, Our Food image+copy block, brands logo grid, recipe inspiration carousel, and a newsletter signup CTA',
   urls: [
-    'https://wknd-trendsetters.site',
+    'https://www.kellanovaawayfromhome.com/',
   ],
   blocks: [
-    {
-      name: 'hero-feature',
-      instances: ['#main-content > header.section.secondary-section > div.container > div.grid-layout'],
-    },
-    {
-      name: 'columns-article',
-      instances: ['#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout'],
-    },
-    {
-      name: 'columns-gallery',
-      instances: ['#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column'],
-    },
-    {
-      name: 'tabs-testimonial',
-      instances: ['#main-content > section.section:nth-of-type(3) div.tabs-wrapper'],
-    },
-    {
-      name: 'cards-article',
-      instances: ['#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column'],
-    },
-    {
-      name: 'accordion-faq',
-      instances: ['#main-content > section.section:nth-of-type(5) div.faq-list'],
-    },
-    {
-      name: 'hero-overlay',
-      instances: ['#main-content > section.section.inverse-section > div.container > div.grid-layout'],
-    },
+    { name: 'carousel-hero', instances: ['#skip-main-content > div.hero div.js-slider'] },
+    { name: 'cards-segments', instances: ['#skip-main-content div.segment-nav'] },
+    { name: 'columns-imagecopy', instances: ['#skip-main-content > div.image-copy-block'] },
+    { name: 'cards-logos', instances: ['#skip-main-content > div.mannualfeaturelist'] },
+    { name: 'carousel-recipe', instances: ['#skip-main-content > div.featureditemlistautomatic'] },
+    { name: 'columns-signup', instances: ['#skip-main-content div.email-signup-row'] },
   ],
   sections: [
-    {
-      id: 'rc2',
-      name: 'Hero intro',
-      selector: '#main-content > header.section.secondary-section',
-      style: 'secondary',
-      blocks: ['hero-feature'],
-      defaultContent: [],
-    },
-    {
-      id: 'rc3',
-      name: 'Featured article',
-      selector: '#main-content > section.section:nth-of-type(1)',
-      style: null,
-      blocks: ['columns-article'],
-      defaultContent: [],
-    },
-    {
-      id: 'rc4',
-      name: 'Style gallery',
-      selector: '#main-content > section.section.secondary-section:nth-of-type(2)',
-      style: 'secondary',
-      blocks: ['columns-gallery'],
-      defaultContent: ['#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center'],
-    },
-    {
-      id: 'rc5',
-      name: 'Testimonials',
-      selector: '#main-content > section.section:nth-of-type(3)',
-      style: null,
-      blocks: ['tabs-testimonial'],
-      defaultContent: [],
-    },
-    {
-      id: 'rc6',
-      name: 'Latest articles',
-      selector: '#main-content > section.section.secondary-section:nth-of-type(4)',
-      style: 'secondary',
-      blocks: ['cards-article'],
-      defaultContent: ['#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center'],
-    },
-    {
-      id: 'rc7',
-      name: 'FAQ',
-      selector: '#main-content > section.section:nth-of-type(5)',
-      style: null,
-      blocks: ['accordion-faq'],
-      defaultContent: ['#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div:first-child'],
-    },
-    {
-      id: 'rc8',
-      name: 'CTA banner',
-      selector: '#main-content > section.section.inverse-section',
-      style: null,
-      blocks: ['hero-overlay'],
-      defaultContent: [],
-    },
+    { id: 'rc2c4c2', name: 'Hero carousel', selector: '#skip-main-content > div.hero', style: null, blocks: ['carousel-hero'], defaultContent: [] },
+    { id: 'rc2c4c3', name: 'Segments intro', selector: '#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3)', style: null, blocks: [], defaultContent: ['#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) h2', '#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) p'] },
+    { id: 'rc2c4c4', name: 'Segments icon grid', selector: '#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(4)', style: null, blocks: ['cards-segments'], defaultContent: [] },
+    { id: 'rc2c4c5', name: 'Our Food image + copy', selector: '#skip-main-content > div.image-copy-block', style: null, blocks: ['columns-imagecopy'], defaultContent: [] },
+    { id: 'rc2c4c6', name: 'Brands intro', selector: '#skip-main-content > div.markuptext:nth-of-type(6)', style: null, blocks: [], defaultContent: ['#skip-main-content > div.markuptext:nth-of-type(6) h2', '#skip-main-content > div.markuptext:nth-of-type(6) p'] },
+    { id: 'rc2c4c7', name: 'Brands logo grid', selector: '#skip-main-content > div.mannualfeaturelist', style: null, blocks: ['cards-logos'], defaultContent: [] },
+    { id: 'rc2c4c8', name: 'Explore Our Brands button', selector: '#skip-main-content > div.markuptext:nth-of-type(8)', style: null, blocks: [], defaultContent: ['#skip-main-content > div.markuptext:nth-of-type(8) a'] },
+    { id: 'rc2c4c9', name: 'Menu inspiration heading', selector: '#skip-main-content > div.markuptext:nth-of-type(9)', style: null, blocks: [], defaultContent: ['#skip-main-content > div.markuptext:nth-of-type(9) h2'] },
+    { id: 'rc2c4c10', name: 'Recipes carousel', selector: '#skip-main-content > div.featureditemlistautomatic', style: null, blocks: ['carousel-recipe'], defaultContent: [] },
+    { id: 'rc2c4c11', name: 'Signup CTA', selector: '#skip-main-content > div.markuptext:last-of-type', style: null, blocks: ['columns-signup'], defaultContent: [] },
   ],
 };
 
 // PARSER REGISTRY
 const parsers = {
-  'hero-feature': heroFeatureParser,
-  'columns-article': columnsArticleParser,
-  'columns-gallery': columnsGalleryParser,
-  'tabs-testimonial': tabsTestimonialParser,
-  'cards-article': cardsArticleParser,
-  'accordion-faq': accordionFaqParser,
-  'hero-overlay': heroOverlayParser,
+  'carousel-hero': carouselHeroParser,
+  'cards-segments': cardsSegmentsParser,
+  'columns-imagecopy': columnsImagecopyParser,
+  'cards-logos': cardsLogosParser,
+  'carousel-recipe': carouselRecipeParser,
+  'columns-signup': columnsSignupParser,
 };
 
 // TRANSFORMER REGISTRY
@@ -132,11 +62,7 @@ const transformers = [
  * Execute all page transformers for a specific hook
  */
 function executeTransformers(hookName, element, payload) {
-  const enhancedPayload = {
-    ...payload,
-    template: PAGE_TEMPLATE,
-  };
-
+  const enhancedPayload = { ...payload, template: PAGE_TEMPLATE };
   transformers.forEach((transformerFn) => {
     try {
       transformerFn.call(null, hookName, element, enhancedPayload);
@@ -151,7 +77,6 @@ function executeTransformers(hookName, element, payload) {
  */
 function findBlocksOnPage(document, template) {
   const pageBlocks = [];
-
   template.blocks.forEach((blockDef) => {
     blockDef.instances.forEach((selector) => {
       const elements = document.querySelectorAll(selector);
@@ -160,15 +85,11 @@ function findBlocksOnPage(document, template) {
       }
       elements.forEach((element) => {
         pageBlocks.push({
-          name: blockDef.name,
-          selector,
-          element,
-          section: blockDef.section || null,
+          name: blockDef.name, selector, element, section: blockDef.section || null,
         });
       });
     });
   });
-
   console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
@@ -202,7 +123,7 @@ export default {
       }
     });
 
-    // 4. afterTransform (final cleanup + section breaks/metadata)
+    // 4. afterTransform (final cleanup + section breaks)
     executeTransformers('afterTransform', main, payload);
 
     // 5. WebImporter built-in rules
@@ -212,10 +133,7 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
-    // 6. Generate sanitized path
-    // Root pathname ('/') reduces to an empty string, which makes the
-    // in-browser path.resolve polyfill fall back to process.cwd() (undefined).
-    // Default the homepage to '/index' and always keep a leading slash.
+    // 6. Generate sanitized path (root '/' -> '/index' to avoid empty-path resolution)
     let pathname = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '');
     if (!pathname) {
       pathname = '/index';

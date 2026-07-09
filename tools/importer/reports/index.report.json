@@ -1,17 +1,16 @@
 {
   "status": "success",
-  "url": "https://wknd-trendsetters.site",
+  "url": "http://localhost:8899/index.html",
   "path": "index",
-  "timestamp": "2026-07-08T21:28:53.991Z",
-  "title": "WKND Trendsetters - Fresh Looks, Bold Stories, Real Life",
+  "timestamp": "2026-07-09T19:33:09.623Z",
+  "title": "",
   "template": "homepage",
   "blocks": [
-    "hero-feature",
-    "columns-article",
-    "columns-gallery",
-    "tabs-testimonial",
-    "cards-article",
-    "accordion-faq",
-    "hero-overlay"
+    "carousel-hero",
+    "cards-segments",
+    "columns-imagecopy",
+    "cards-logos",
+    "carousel-recipe",
+    "columns-signup"
   ]
 }

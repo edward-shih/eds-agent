@@ -1,99 +1,20 @@
 footer {
-  background-color: var(--section-dark-color, #000);
-  color: #fff;
-  font-size: 14px;
+  background-color: var(--light-color);
+  font-size: var(--body-font-size-xs);
 }
 
-footer .footer-inner {
-  box-sizing: border-box;
+footer .footer > div {
   margin: auto;
-  max-width: var(--content-max-width, 1200px);
-  padding: 48px 24px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
+  max-width: 1200px;
+  padding: 40px 24px 24px;
 }
 
-/* brand block */
-footer .footer-brand p {
-  margin: 0 0 20px;
-}
-
-footer .footer-brand a {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-  font-family: var(--heading-font-family);
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-}
-
-footer .footer-brand > p img {
-  width: 32px;
-  height: 32px;
-}
-
-/* social icons row */
-footer .footer-brand ul {
-  display: flex;
-  gap: 16px;
-  list-style: none;
+footer .footer p {
   margin: 0;
-  padding: 0;
-}
-
-footer .footer-brand ul a {
-  display: inline-flex;
-  padding: 0;
-  color: rgb(153 153 153);
-}
-
-footer .footer-brand ul img {
-  width: 16px;
-  height: 16px;
-}
-
-footer .footer-brand ul a:hover img {
-  filter: brightness(0) invert(1);
-}
-
-/* nav columns */
-footer .footer-nav h2 {
-  margin: 0 0 16px;
-  color: rgb(153 153 153);
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-footer .footer-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-footer .footer-nav li {
-  margin-bottom: 12px;
-}
-
-footer .footer-nav ul a {
-  color: rgb(153 153 153);
-  font-size: 14px;
-  text-decoration: none;
-}
-
-footer .footer-nav ul a:hover {
-  color: #fff;
 }
 
 @media (width >= 900px) {
-  footer .footer-inner {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 48px;
-    padding: 80px 32px;
+  footer .footer > div {
+    padding: 40px 32px 24px;
   }
 }

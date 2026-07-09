@@ -1,0 +1,33 @@
+.columns-signup > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-signup img {
+  width: 100%;
+}
+
+.columns-signup > div > div {
+  order: 1;
+}
+
+.columns-signup > div > .columns-signup-img-col {
+  order: 0;
+}
+
+.columns-signup > div > .columns-signup-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-signup > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-signup > div > div {
+    flex: 1;
+    order: unset;
+  }
+}

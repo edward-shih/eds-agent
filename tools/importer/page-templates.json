@@ -6,129 +6,149 @@
     {
       "name": "homepage",
       "urls": [
-        "https://wknd-trendsetters.site"
+        "https://www.kellanovaawayfromhome.com/"
       ],
-      "representativeUrl": "https://wknd-trendsetters.site",
+      "representativeUrl": "https://www.kellanovaawayfromhome.com/",
       "coverageGaps": [],
-      "description": "Fashion blog homepage with hero, featured article, image gallery, testimonials tabs, latest articles cards, FAQ accordion, and CTA sections",
+      "description": "Kellanova Away From Home homepage: hero carousel, segments icon grid, Our Food image+copy block, brands logo grid, recipe inspiration carousel, and a newsletter signup CTA",
       "blocks": [
         {
-          "name": "hero-feature",
+          "name": "carousel-hero",
           "instances": [
-            "#main-content > header.section.secondary-section > div.container > div.grid-layout"
+            "#skip-main-content > div.hero div.js-slider"
           ]
         },
         {
-          "name": "columns-article",
+          "name": "cards-segments",
           "instances": [
-            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"
+            "#skip-main-content div.segment-nav"
           ]
         },
         {
-          "name": "columns-gallery",
+          "name": "columns-imagecopy",
           "instances": [
-            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column"
+            "#skip-main-content > div.image-copy-block"
           ]
         },
         {
-          "name": "tabs-testimonial",
+          "name": "cards-logos",
           "instances": [
-            "#main-content > section.section:nth-of-type(3) div.tabs-wrapper"
+            "#skip-main-content > div.mannualfeaturelist"
           ]
         },
         {
-          "name": "cards-article",
+          "name": "carousel-recipe",
           "instances": [
-            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column"
+            "#skip-main-content > div.featureditemlistautomatic"
           ]
         },
         {
-          "name": "accordion-faq",
+          "name": "columns-signup",
           "instances": [
-            "#main-content > section.section:nth-of-type(5) div.faq-list"
-          ]
-        },
-        {
-          "name": "hero-overlay",
-          "instances": [
-            "#main-content > section.section.inverse-section > div.container > div.grid-layout"
+            "#skip-main-content div.email-signup-row"
           ]
         }
       ],
       "sections": [
         {
-          "id": "rc2",
-          "name": "Hero intro",
-          "selector": "#main-content > header.section.secondary-section",
-          "style": "secondary",
+          "id": "rc2c4c2",
+          "name": "Hero carousel",
+          "selector": "#skip-main-content > div.hero",
+          "style": null,
           "blocks": [
-            "hero-feature"
+            "carousel-hero"
           ],
           "defaultContent": []
         },
         {
-          "id": "rc3",
-          "name": "Featured article",
-          "selector": "#main-content > section.section:nth-of-type(1)",
+          "id": "rc2c4c3",
+          "name": "Segments intro",
+          "selector": "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3)",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) h2",
+            "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) p"
+          ]
+        },
+        {
+          "id": "rc2c4c4",
+          "name": "Segments icon grid",
+          "selector": "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(4)",
           "style": null,
           "blocks": [
-            "columns-article"
+            "cards-segments"
           ],
           "defaultContent": []
         },
         {
-          "id": "rc4",
-          "name": "Style gallery",
-          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
-          "style": "secondary",
-          "blocks": [
-            "columns-gallery"
-          ],
-          "defaultContent": [
-            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center"
-          ]
-        },
-        {
-          "id": "rc5",
-          "name": "Testimonials",
-          "selector": "#main-content > section.section:nth-of-type(3)",
+          "id": "rc2c4c5",
+          "name": "Our Food image + copy",
+          "selector": "#skip-main-content > div.image-copy-block",
           "style": null,
           "blocks": [
-            "tabs-testimonial"
+            "columns-imagecopy"
           ],
           "defaultContent": []
         },
         {
-          "id": "rc6",
-          "name": "Latest articles",
-          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
-          "style": "secondary",
-          "blocks": [
-            "cards-article"
-          ],
+          "id": "rc2c4c6",
+          "name": "Brands intro",
+          "selector": "#skip-main-content > div.markuptext:nth-of-type(6)",
+          "style": null,
+          "blocks": [],
           "defaultContent": [
-            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center"
+            "#skip-main-content > div.markuptext:nth-of-type(6) h2",
+            "#skip-main-content > div.markuptext:nth-of-type(6) p"
           ]
         },
         {
-          "id": "rc7",
-          "name": "FAQ",
-          "selector": "#main-content > section.section:nth-of-type(5)",
+          "id": "rc2c4c7",
+          "name": "Brands logo grid",
+          "selector": "#skip-main-content > div.mannualfeaturelist",
           "style": null,
           "blocks": [
-            "accordion-faq"
+            "cards-logos"
           ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2c4c8",
+          "name": "Explore Our Brands button",
+          "selector": "#skip-main-content > div.markuptext:nth-of-type(8)",
+          "style": null,
+          "blocks": [],
           "defaultContent": [
-            "#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div:first-child"
+            "#skip-main-content > div.markuptext:nth-of-type(8) a"
           ]
         },
         {
-          "id": "rc8",
-          "name": "CTA banner",
-          "selector": "#main-content > section.section.inverse-section",
+          "id": "rc2c4c9",
+          "name": "Menu inspiration heading",
+          "selector": "#skip-main-content > div.markuptext:nth-of-type(9)",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content > div.markuptext:nth-of-type(9) h2"
+          ]
+        },
+        {
+          "id": "rc2c4c10",
+          "name": "Recipes carousel",
+          "selector": "#skip-main-content > div.featureditemlistautomatic",
           "style": null,
           "blocks": [
-            "hero-overlay"
+            "carousel-recipe"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2c4c11",
+          "name": "Signup CTA",
+          "selector": "#skip-main-content > div.markuptext:last-of-type",
+          "style": null,
+          "blocks": [
+            "columns-signup"
           ],
           "defaultContent": []
         }

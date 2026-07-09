@@ -41,225 +41,241 @@ var CustomImportScript = (() => {
     default: () => import_homepage_default
   });
 
-  // tools/importer/parsers/hero-feature.js
+  // tools/importer/parsers/carousel-hero.js
   function parse(element, { document }) {
-    const heading = element.querySelector('h1, h2, .h1-heading, [class*="heading"]');
-    const subheading = element.querySelector('p.subheading, p[class*="subhead"], p');
-    const ctaLinks = Array.from(
-      element.querySelectorAll(".button-group a, a.button")
-    );
-    const images = Array.from(
-      element.querySelectorAll('img.cover-image, img[class*="cover"], img')
-    );
-    if (!heading && !subheading && images.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
+    let slides = Array.from(element.querySelectorAll(".hero-slide")).filter((s) => !s.closest(".tns-slide-cloned") && !s.classList.contains("tns-slide-cloned"));
+    if (!slides.length) {
+      slides = Array.from(element.querySelectorAll(":scope > a, :scope > div")).filter((s) => s.querySelector("img"));
     }
     const cells = [];
-    if (images.length > 0) {
-      cells.push([images]);
-    }
-    const contentCell = [];
-    if (heading) contentCell.push(heading);
-    if (subheading) contentCell.push(subheading);
-    contentCell.push(...ctaLinks);
-    cells.push([contentCell]);
-    const block = WebImporter.Blocks.createBlock(document, { name: "hero-feature", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/columns-article.js
-  function parse2(element, { document }) {
-    const columns = Array.from(element.querySelectorAll(":scope > div"));
-    if (columns.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    cells.push(columns);
-    const block = WebImporter.Blocks.createBlock(document, { name: "columns-article", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/columns-gallery.js
-  function parse3(element, { document }) {
-    const COLUMNS = 4;
-    let items = Array.from(element.querySelectorAll(":scope > div"));
-    if (items.length === 0) {
-      items = Array.from(element.querySelectorAll("img.cover-image, img"));
-    }
-    if (items.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    for (let i = 0; i < items.length; i += COLUMNS) {
-      const row = items.slice(i, i + COLUMNS);
-      while (row.length < COLUMNS) row.push("");
-      cells.push(row);
-    }
-    const block = WebImporter.Blocks.createBlock(document, { name: "columns-gallery", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/tabs-testimonial.js
-  function parse4(element, { document }) {
-    const panes = Array.from(
-      element.querySelectorAll(".tabs-content > .tab-pane, .tab-pane")
-    );
-    const buttons = Array.from(
-      element.querySelectorAll(".tab-menu .tab-menu-link, button.tab-menu-link")
-    );
-    if (panes.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    panes.forEach((pane, i) => {
-      const button = buttons[i];
-      let label = "";
-      if (button) {
-        const nameEl = button.querySelector("strong");
-        label = nameEl ? nameEl.textContent.trim() : button.textContent.trim();
-      }
-      if (!label) {
-        const paneName = pane.querySelector("strong");
-        label = paneName ? paneName.textContent.trim() : `Tab ${i + 1}`;
-      }
-      const contentSource = pane.querySelector(":scope > .grid-layout") || pane;
-      const content = Array.from(contentSource.children);
-      cells.push([label, content.length ? content : contentSource]);
-    });
-    const block = WebImporter.Blocks.createBlock(document, { name: "tabs-testimonial", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/cards-article.js
-  function parse5(element, { document }) {
-    const cards = Array.from(
-      element.querySelectorAll(":scope > a.article-card, a.article-card, :scope > .article-card")
-    );
-    if (cards.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    cards.forEach((card) => {
-      const image = card.querySelector(".article-card-image img, img");
-      const textCell = [];
-      const meta = card.querySelector(".article-card-meta");
-      if (meta) textCell.push(meta);
-      const heading = card.querySelector('h1, h2, h3, h4, [class*="heading"]');
-      if (heading) textCell.push(heading);
-      const href = card.getAttribute("href");
+    slides.forEach((slide) => {
+      const image = slide.querySelector("picture") || slide.querySelector("img");
+      let ctaCell = "";
+      const href = slide.tagName === "A" ? slide.getAttribute("href") : null;
       if (href) {
-        const cta = document.createElement("a");
-        cta.setAttribute("href", href);
-        cta.textContent = heading ? heading.textContent.trim() : "Read more";
-        textCell.push(cta);
+        const link = document.createElement("a");
+        link.href = href;
+        const img = slide.querySelector("img");
+        link.textContent = img && img.getAttribute("alt") || href;
+        ctaCell = link;
       }
-      cells.push([image || "", textCell.length ? textCell : ""]);
+      if (image) {
+        cells.push([image, ctaCell]);
+      }
     });
-    const block = WebImporter.Blocks.createBlock(document, { name: "cards-article", cells });
+    if (!cells.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document, { name: "carousel-hero", cells });
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/accordion-faq.js
-  function parse6(element, { document }) {
-    const items = Array.from(
-      element.querySelectorAll(":scope > details.faq-item, details.faq-item, .faq-item")
-    );
-    if (items.length === 0) {
+  // tools/importer/parsers/cards-segments.js
+  function parse2(element, { document }) {
+    const items = Array.from(element.querySelectorAll("a")).filter((a) => a.querySelector("img"));
+    const cells = [];
+    items.forEach((item) => {
+      const icon = item.querySelector("img");
+      const labelText = (item.querySelector("span") || item).textContent.trim();
+      const href = item.getAttribute("href");
+      let textCell;
+      if (href) {
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = labelText;
+        textCell = link;
+      } else {
+        textCell = labelText;
+      }
+      if (icon) {
+        cells.push([icon, textCell]);
+      }
+    });
+    if (!cells.length) {
       element.replaceWith(...element.childNodes);
       return;
+    }
+    const block = WebImporter.Blocks.createBlock(document, { name: "cards-segments", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/columns-imagecopy.js
+  function parse3(element, { document }) {
+    const imageContainer = element.querySelector(".block-image") || element;
+    const image = imageContainer.querySelector("picture") || imageContainer.querySelector("img");
+    const copyContainer = element.querySelector(".rich-text") || element.querySelector(".block-caption") || element;
+    const heading = copyContainer.querySelector("h1, h2, h3, h4, h5, h6");
+    const paragraphs = Array.from(copyContainer.querySelectorAll("p"));
+    const ctas = Array.from(copyContainer.querySelectorAll("a"));
+    const copyCell = [];
+    if (heading) copyCell.push(heading);
+    copyCell.push(...paragraphs);
+    copyCell.push(...ctas);
+    if (!image && !copyCell.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [[image || "", copyCell]];
+    const block = WebImporter.Blocks.createBlock(document, { name: "columns-imagecopy", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/cards-logos.js
+  function parse4(element, { document }) {
+    let items = Array.from(element.querySelectorAll(".featured-item"));
+    if (!items.length) {
+      items = Array.from(element.querySelectorAll("a")).filter((a) => a.querySelector("img"));
     }
     const cells = [];
     items.forEach((item) => {
-      const question = item.querySelector(".faq-question, summary");
-      const answer = item.querySelector(".faq-answer");
-      let titleCell = "";
-      if (question) {
-        const span = question.querySelector("span");
-        titleCell = span || question;
+      const anchor = item.matches("a") ? item : item.querySelector("a");
+      const img = item.querySelector("img");
+      if (!img) return;
+      let imageCell = img;
+      if (anchor) {
+        const link = document.createElement("a");
+        const href = anchor.getAttribute("href");
+        if (href) link.href = href;
+        const target = anchor.getAttribute("target");
+        if (target) link.setAttribute("target", target);
+        link.appendChild(img);
+        imageCell = link;
       }
-      cells.push([titleCell, answer || ""]);
+      cells.push([imageCell, ""]);
     });
-    const block = WebImporter.Blocks.createBlock(document, { name: "accordion-faq", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/hero-overlay.js
-  function parse7(element, { document }) {
-    const bgImage = element.querySelector(
-      'img.cover-image, img[class*="overlay"], img'
-    );
-    const heading = element.querySelector('h1, h2, .h1-heading, [class*="heading"]');
-    const subheading = element.querySelector('p.subheading, p[class*="subhead"], p');
-    const ctaLinks = Array.from(
-      element.querySelectorAll(".button-group a, a.button")
-    );
-    if (!heading && !subheading && !bgImage) {
+    if (!cells.length) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const cells = [];
-    if (bgImage) {
-      cells.push([bgImage]);
-    }
-    const contentCell = [];
-    if (heading) contentCell.push(heading);
-    if (subheading) contentCell.push(subheading);
-    contentCell.push(...ctaLinks);
-    cells.push([contentCell]);
-    const block = WebImporter.Blocks.createBlock(document, { name: "hero-overlay", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "cards-logos", cells });
     element.replaceWith(block);
   }
 
-  // tools/importer/transformers/wknd-trendsetters-cleanup.js
+  // tools/importer/parsers/carousel-recipe.js
+  function parse5(element, { document }) {
+    let items = Array.from(element.querySelectorAll(".featured-item"));
+    if (!items.length) {
+      items = Array.from(element.querySelectorAll("a")).filter((a) => a.querySelector("img"));
+    }
+    const cells = [];
+    items.forEach((item) => {
+      const anchor = item.matches("a") ? item : item.querySelector("a");
+      const image = item.querySelector("picture") || item.querySelector("img");
+      const titleText = (item.querySelector(".featured-item-title, .featured-item-description") || anchor || item).textContent.trim();
+      const href = anchor ? anchor.getAttribute("href") : null;
+      let titleCell;
+      if (href) {
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = titleText;
+        titleCell = link;
+      } else {
+        titleCell = titleText;
+      }
+      if (image) {
+        cells.push([image, titleCell]);
+      }
+    });
+    if (!cells.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document, { name: "carousel-recipe", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/columns-signup.js
+  function parse6(element, { document }) {
+    const heading = element.querySelector("h1, h2, h3, h4, h5, h6");
+    const paragraphs = Array.from(element.querySelectorAll("p"));
+    const copyCell = [];
+    if (heading) copyCell.push(heading);
+    copyCell.push(...paragraphs);
+    const ctaLink = element.querySelector("a");
+    const ctaButton = element.querySelector("button");
+    let ctaCell = "";
+    if (ctaLink) {
+      ctaCell = ctaLink;
+    } else if (ctaButton) {
+      const label = ctaButton.textContent.trim();
+      const link = document.createElement("a");
+      link.href = "#signup";
+      link.textContent = label || "Sign Up";
+      ctaCell = link;
+    }
+    if (!copyCell.length && !ctaCell) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [[copyCell, ctaCell]];
+    const block = WebImporter.Blocks.createBlock(document, { name: "columns-signup", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/transformers/kellanova-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
     if (hookName === TransformHook.beforeTransform) {
-      element.querySelectorAll('img[src^="data:image/svg+xml"]').forEach((img) => img.remove());
+      WebImporter.DOMUtils.remove(element, [
+        "header",
+        "footer",
+        "nav",
+        ".skip-link",
+        "#onetrust-consent-sdk",
+        "#CybotCookiebotDialog",
+        '[class*="cookie-consent"]',
+        '[id*="cookie-consent"]'
+      ]);
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, [
-        ".skip-link",
-        ".navbar",
-        "footer"
+        "source",
+        "iframe",
+        "link",
+        "noscript"
       ]);
       element.querySelectorAll("*").forEach((el) => {
-        [...el.attributes].forEach((attr) => {
-          if (attr.name.startsWith("data-astro-cid-")) {
-            el.removeAttribute(attr.name);
+        el.removeAttribute("data-tracking");
+        if (el.classList && el.classList.length) {
+          const toRemove = [];
+          el.classList.forEach((cls) => {
+            if (cls.startsWith("aem-GridColumn") || cls === "aem-Grid" || cls === "section--in-viewport") {
+              toRemove.push(cls);
+            }
+          });
+          toRemove.forEach((cls) => el.classList.remove(cls));
+          if (el.classList.length === 0) {
+            el.removeAttribute("class");
           }
-        });
+        }
       });
     }
   }
 
-  // tools/importer/transformers/wknd-trendsetters-sections.js
+  // tools/importer/transformers/kellanova-sections.js
   var TransformHook2 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform2(hookName, element, payload) {
-    if (hookName !== TransformHook2.afterTransform) return;
-    const sections = payload && payload.template && payload.template.sections;
-    if (!sections || sections.length < 2) return;
-    const doc = element.ownerDocument;
-    for (let i = sections.length - 1; i >= 0; i -= 1) {
-      const section = sections[i];
-      const target = element.querySelector(section.selector);
-      if (!target) {
-        console.warn(`Section selector did not match: ${section.selector}`);
-        continue;
-      }
-      if (section.style) {
-        const metaBlock = WebImporter.Blocks.createBlock(doc, {
-          name: "Section Metadata",
-          cells: { style: section.style }
-        });
-        target.append(metaBlock);
-      }
-      if (i > 0) {
-        target.before(doc.createElement("hr"));
+    if (hookName === TransformHook2.afterTransform) {
+      const template = payload && payload.template;
+      const sections = template && Array.isArray(template.sections) ? template.sections : [];
+      if (sections.length < 2) return;
+      const doc = element.ownerDocument;
+      for (let i = sections.length - 1; i >= 0; i -= 1) {
+        const section = sections[i];
+        if (!section || !section.selector) continue;
+        const sectionEl = element.querySelector(section.selector);
+        if (!sectionEl) continue;
+        if (section.style) {
+          const meta = WebImporter.Blocks.createBlock(doc, {
+            name: "Section Metadata",
+            cells: { style: section.style }
+          });
+          sectionEl.after(meta);
+        }
+        if (i > 0 && sectionEl.previousElementSibling) {
+          sectionEl.before(doc.createElement("hr"));
+        }
       }
     }
   }
@@ -267,116 +283,45 @@ var CustomImportScript = (() => {
   // tools/importer/import-homepage.js
   var PAGE_TEMPLATE = {
     name: "homepage",
-    description: "Fashion blog homepage with hero, featured article, image gallery, testimonials tabs, latest articles cards, FAQ accordion, and CTA sections",
+    description: "Kellanova Away From Home homepage: hero carousel, segments icon grid, Our Food image+copy block, brands logo grid, recipe inspiration carousel, and a newsletter signup CTA",
     urls: [
-      "https://wknd-trendsetters.site"
+      "https://www.kellanovaawayfromhome.com/"
     ],
     blocks: [
-      {
-        name: "hero-feature",
-        instances: ["#main-content > header.section.secondary-section > div.container > div.grid-layout"]
-      },
-      {
-        name: "columns-article",
-        instances: ["#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"]
-      },
-      {
-        name: "columns-gallery",
-        instances: ["#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column"]
-      },
-      {
-        name: "tabs-testimonial",
-        instances: ["#main-content > section.section:nth-of-type(3) div.tabs-wrapper"]
-      },
-      {
-        name: "cards-article",
-        instances: ["#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column"]
-      },
-      {
-        name: "accordion-faq",
-        instances: ["#main-content > section.section:nth-of-type(5) div.faq-list"]
-      },
-      {
-        name: "hero-overlay",
-        instances: ["#main-content > section.section.inverse-section > div.container > div.grid-layout"]
-      }
+      { name: "carousel-hero", instances: ["#skip-main-content > div.hero div.js-slider"] },
+      { name: "cards-segments", instances: ["#skip-main-content div.segment-nav"] },
+      { name: "columns-imagecopy", instances: ["#skip-main-content > div.image-copy-block"] },
+      { name: "cards-logos", instances: ["#skip-main-content > div.mannualfeaturelist"] },
+      { name: "carousel-recipe", instances: ["#skip-main-content > div.featureditemlistautomatic"] },
+      { name: "columns-signup", instances: ["#skip-main-content div.email-signup-row"] }
     ],
     sections: [
-      {
-        id: "rc2",
-        name: "Hero intro",
-        selector: "#main-content > header.section.secondary-section",
-        style: "secondary",
-        blocks: ["hero-feature"],
-        defaultContent: []
-      },
-      {
-        id: "rc3",
-        name: "Featured article",
-        selector: "#main-content > section.section:nth-of-type(1)",
-        style: null,
-        blocks: ["columns-article"],
-        defaultContent: []
-      },
-      {
-        id: "rc4",
-        name: "Style gallery",
-        selector: "#main-content > section.section.secondary-section:nth-of-type(2)",
-        style: "secondary",
-        blocks: ["columns-gallery"],
-        defaultContent: ["#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center"]
-      },
-      {
-        id: "rc5",
-        name: "Testimonials",
-        selector: "#main-content > section.section:nth-of-type(3)",
-        style: null,
-        blocks: ["tabs-testimonial"],
-        defaultContent: []
-      },
-      {
-        id: "rc6",
-        name: "Latest articles",
-        selector: "#main-content > section.section.secondary-section:nth-of-type(4)",
-        style: "secondary",
-        blocks: ["cards-article"],
-        defaultContent: ["#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center"]
-      },
-      {
-        id: "rc7",
-        name: "FAQ",
-        selector: "#main-content > section.section:nth-of-type(5)",
-        style: null,
-        blocks: ["accordion-faq"],
-        defaultContent: ["#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div:first-child"]
-      },
-      {
-        id: "rc8",
-        name: "CTA banner",
-        selector: "#main-content > section.section.inverse-section",
-        style: null,
-        blocks: ["hero-overlay"],
-        defaultContent: []
-      }
+      { id: "rc2c4c2", name: "Hero carousel", selector: "#skip-main-content > div.hero", style: null, blocks: ["carousel-hero"], defaultContent: [] },
+      { id: "rc2c4c3", name: "Segments intro", selector: "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3)", style: null, blocks: [], defaultContent: ["#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) h2", "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(3) p"] },
+      { id: "rc2c4c4", name: "Segments icon grid", selector: "#skip-main-content > div.markuptext.section--in-viewport:nth-of-type(4)", style: null, blocks: ["cards-segments"], defaultContent: [] },
+      { id: "rc2c4c5", name: "Our Food image + copy", selector: "#skip-main-content > div.image-copy-block", style: null, blocks: ["columns-imagecopy"], defaultContent: [] },
+      { id: "rc2c4c6", name: "Brands intro", selector: "#skip-main-content > div.markuptext:nth-of-type(6)", style: null, blocks: [], defaultContent: ["#skip-main-content > div.markuptext:nth-of-type(6) h2", "#skip-main-content > div.markuptext:nth-of-type(6) p"] },
+      { id: "rc2c4c7", name: "Brands logo grid", selector: "#skip-main-content > div.mannualfeaturelist", style: null, blocks: ["cards-logos"], defaultContent: [] },
+      { id: "rc2c4c8", name: "Explore Our Brands button", selector: "#skip-main-content > div.markuptext:nth-of-type(8)", style: null, blocks: [], defaultContent: ["#skip-main-content > div.markuptext:nth-of-type(8) a"] },
+      { id: "rc2c4c9", name: "Menu inspiration heading", selector: "#skip-main-content > div.markuptext:nth-of-type(9)", style: null, blocks: [], defaultContent: ["#skip-main-content > div.markuptext:nth-of-type(9) h2"] },
+      { id: "rc2c4c10", name: "Recipes carousel", selector: "#skip-main-content > div.featureditemlistautomatic", style: null, blocks: ["carousel-recipe"], defaultContent: [] },
+      { id: "rc2c4c11", name: "Signup CTA", selector: "#skip-main-content > div.markuptext:last-of-type", style: null, blocks: ["columns-signup"], defaultContent: [] }
     ]
   };
   var parsers = {
-    "hero-feature": parse,
-    "columns-article": parse2,
-    "columns-gallery": parse3,
-    "tabs-testimonial": parse4,
-    "cards-article": parse5,
-    "accordion-faq": parse6,
-    "hero-overlay": parse7
+    "carousel-hero": parse,
+    "cards-segments": parse2,
+    "columns-imagecopy": parse3,
+    "cards-logos": parse4,
+    "carousel-recipe": parse5,
+    "columns-signup": parse6
   };
   var transformers = [
     transform,
     ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
-    const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
-      template: PAGE_TEMPLATE
-    });
+    const enhancedPayload = __spreadProps(__spreadValues({}, payload), { template: PAGE_TEMPLATE });
     transformers.forEach((transformerFn) => {
       try {
         transformerFn.call(null, hookName, element, enhancedPayload);
