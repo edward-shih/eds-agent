@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "http://localhost:8899/en-us/recipes.html",
+  "path": "recipes",
+  "timestamp": "2026-07-13T20:52:30.430Z",
+  "title": "Recipes Search by Kellanova™ Away From Home",
+  "template": "recipes",
+  "blocks": [
+    "cards-recipes"
+  ]
+}

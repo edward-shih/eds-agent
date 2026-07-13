@@ -242,6 +242,45 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "recipes",
+      "urls": [
+        "https://www.kellanovaawayfromhome.com/en-us/recipes.html"
+      ],
+      "representativeUrl": "https://www.kellanovaawayfromhome.com/en-us/recipes.html",
+      "coverageGaps": [],
+      "description": "Recipes page: heading + a grid of recipe cards (static capture of the search results — image, title, View Recipe link, using the Cards feature variant). The live source is an API-driven search app; captured page 1 (12 recipes).",
+      "blocks": [
+        {
+          "name": "cards-recipes",
+          "instances": [
+            "#skip-main-content div.recipe-results"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc-intro",
+          "name": "Heading",
+          "selector": "#skip-main-content > div.markuptext:first-of-type",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content > div.markuptext:first-of-type h1"
+          ]
+        },
+        {
+          "id": "rc-grid",
+          "name": "Recipe grid",
+          "selector": "#skip-main-content div.recipe-results",
+          "style": null,
+          "blocks": [
+            "cards-recipes"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }
