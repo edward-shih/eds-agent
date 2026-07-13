@@ -193,6 +193,55 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "core-assortment",
+      "urls": [
+        "https://www.kellanovaawayfromhome.com/en-us/convenience/core-assortment.html"
+      ],
+      "representativeUrl": "https://www.kellanovaawayfromhome.com/en-us/convenience/core-assortment.html",
+      "coverageGaps": [],
+      "description": "Convenience Core Assortment page: breadcrumb, hero banner, anchor nav, Top 20 heading/copy/chart, Power of our Brands intro, and a brand-power download cards grid (Cards feature variant)",
+      "blocks": [
+        {
+          "name": "cards-feature",
+          "instances": [
+            "#skip-main-content div.featureditemlistautomatic"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "ca-breadcrumb",
+          "name": "Breadcrumb",
+          "selector": "#skip-main-content > div.breadcrumb",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content > div.breadcrumb"
+          ]
+        },
+        {
+          "id": "ca-hero",
+          "name": "Hero banner",
+          "selector": "#skip-main-content > div.hero:first-of-type",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#skip-main-content > div.hero:first-of-type"
+          ]
+        },
+        {
+          "id": "ca-brands",
+          "name": "Power of our Brands grid",
+          "selector": "#skip-main-content div.featureditemlistautomatic",
+          "style": null,
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

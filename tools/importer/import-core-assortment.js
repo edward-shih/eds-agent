@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 // PARSER IMPORTS
-import formParser from './parsers/form.js';
+import cardsFeatureParser from './parsers/cards-feature.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/kellanova-cleanup.js';
@@ -10,23 +10,24 @@ import sectionsTransformer from './transformers/kellanova-sections.js';
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
-  name: 'contact-us',
-  description: 'Contact Us page: centered intro heading + paragraph with phone number, followed by a multi-field contact form',
+  name: 'core-assortment',
+  description: 'Convenience Core Assortment page: breadcrumb, hero banner, anchor nav, Top 20 heading/copy/chart, Power of our Brands intro, and a brand-power download cards grid',
   urls: [
-    'https://www.kellanovaawayfromhome.com/en-us/contact-us.html',
+    'https://www.kellanovaawayfromhome.com/en-us/convenience/core-assortment.html',
   ],
   blocks: [
-    { name: 'form', instances: ['#skip-main-content div.contact-field.contact-us-style'] },
+    { name: 'cards-feature', instances: ['#skip-main-content div.featureditemlistautomatic'] },
   ],
   sections: [
-    { id: 'cu-intro', name: 'Intro', selector: '#skip-main-content div.content_wrapper', style: null, blocks: [], defaultContent: ['#skip-main-content div.content_wrapper h1', '#skip-main-content div.content_wrapper p'] },
-    { id: 'cu-form', name: 'Contact form', selector: '#skip-main-content div.contact-field.contact-us-style', style: null, blocks: ['form'], defaultContent: [] },
+    { id: 'ca-breadcrumb', name: 'Breadcrumb', selector: '#skip-main-content > div.breadcrumb', style: null, blocks: [], defaultContent: ['#skip-main-content > div.breadcrumb'] },
+    { id: 'ca-hero', name: 'Hero banner', selector: '#skip-main-content > div.hero:first-of-type', style: null, blocks: [], defaultContent: ['#skip-main-content > div.hero:first-of-type'] },
+    { id: 'ca-brands', name: 'Power of our Brands grid', selector: '#skip-main-content div.featureditemlistautomatic', style: null, blocks: ['cards-feature'], defaultContent: [] },
   ],
 };
 
 // PARSER REGISTRY
 const parsers = {
-  form: formParser,
+  'cards-feature': cardsFeatureParser,
 };
 
 // TRANSFORMER REGISTRY

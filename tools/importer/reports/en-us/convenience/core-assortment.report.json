@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "http://localhost:8899/en-us/convenience/core-assortment.html",
+  "path": "en-us/convenience/core-assortment",
+  "timestamp": "2026-07-13T18:51:02.219Z",
+  "title": "Kellanova™ Away From Home core convenience snacking portfolio",
+  "template": "core-assortment",
+  "blocks": [
+    "cards-feature"
+  ]
+}

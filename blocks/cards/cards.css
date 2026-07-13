@@ -209,4 +209,79 @@
   }
 }
 
+/* ==========================================================================
+   Variant: feature — 5 cards per row on a light-grey band, one image per card.
+   Cards lift/scale outward on hover. Collapses to fewer columns on smaller
+   screens: 1 (mobile) / 3 (tablet >=600) / 5 (desktop >=900).
+   ========================================================================== */
+
+.cards.feature {
+  background-color: var(--light-color);
+  padding: 32px 24px;
+}
+
+.cards.feature > ul {
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.cards.feature > ul > li {
+  border: none;
+  background-color: var(--background-color);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cards.feature > ul > li:hover,
+.cards.feature > ul > li:focus-within {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 24px rgb(0 0 0 / 15%);
+}
+
+.cards.feature .cards-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* hide the empty body cell when a card carries only an image */
+.cards.feature .cards-card-body:empty {
+  display: none;
+}
+
+/* card body: title + optional CTA (e.g. Download) */
+.cards.feature .cards-card-body {
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+}
+
+.cards.feature .cards-card-body h3 {
+  margin: 0 0 8px;
+  font-size: var(--body-font-size-m);
+  line-height: 1.2;
+}
+
+.cards.feature .cards-card-body a:any-link {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cards.feature .cards-card-body a:hover {
+  color: var(--link-hover-color);
+}
+
+@media (width >= 600px) {
+  .cards.feature > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards.feature > ul {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 /* stylelint-enable no-descending-specificity */
