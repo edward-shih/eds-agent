@@ -210,38 +210,44 @@
 }
 
 /* ==========================================================================
-   Variant: feature — 5 cards per row on a light-grey band, one image per card.
-   Cards lift/scale outward on hover. Collapses to fewer columns on smaller
-   screens: 1 (mobile) / 3 (tablet >=600) / 5 (desktop >=900).
+   Variant: feature — "Power of our Brands" download grid.
+   Source: transparent tiles (no card chrome) on the page background. Each tile
+   is a contained brand-logo thumbnail in a rounded 8px frame, a large bold
+   centered title, and a red pill "Download" CTA. Columns: 1 (mobile) /
+   3 (desktop >=900). Subtle outward lift retained on hover per design request.
    ========================================================================== */
 
 .cards.feature {
-  background-color: var(--light-color);
-  padding: 32px 24px;
+  margin: 32px 0 64px;
+  padding: 16px 0;
+  background-color: transparent;
 }
 
 .cards.feature > ul {
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 32px 24px;
 }
 
+/* tile: transparent, no border/shadow; centered column of image + body */
 .cards.feature > ul > li {
+  display: flex;
+  flex-direction: column;
   border: none;
-  background-color: var(--background-color);
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: transparent;
+  text-align: center;
+  transition: transform 0.2s ease;
 }
 
-.cards.feature > ul > li:hover,
-.cards.feature > ul > li:focus-within {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 12px 24px rgb(0 0 0 / 15%);
+/* rounded logo frame; logo is contained (not cropped), ~3:2 like the source */
+.cards.feature .cards-card-image {
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .cards.feature .cards-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
 }
 
 /* hide the empty body cell when a card carries only an image */
@@ -249,38 +255,60 @@
   display: none;
 }
 
-/* card body: title + optional CTA (e.g. Download) */
+/* card body: title + Download CTA, centered */
 .cards.feature .cards-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
-  padding: 16px;
-  text-align: center;
+  padding: 0;
 }
 
 .cards.feature .cards-card-body h3 {
-  margin: 0 0 8px;
-  font-size: var(--body-font-size-m);
-  line-height: 1.2;
+  margin: 16px 0 0;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
 }
 
+/* Download CTA: red pill button. EDS decorates <p><a> as .button; style the
+   link directly so it reads as the source's rounded red button. */
 .cards.feature .cards-card-body a:any-link {
-  color: var(--link-color);
+  display: inline-block;
+  margin-top: 32px;
+  padding: 11px 28px;
+  border: none;
+  border-radius: 28px;
+  background-color: var(--brand-red);
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-size: 18px;
   font-weight: 600;
-  text-decoration: underline;
+  line-height: 1.33;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease;
 }
 
-.cards.feature .cards-card-body a:hover {
-  color: var(--link-hover-color);
+.cards.feature .cards-card-body a:hover,
+.cards.feature .cards-card-body a:focus-visible {
+  background-color: var(--link-hover-color);
+  color: var(--background-color);
+  text-decoration: none;
 }
 
-@media (width >= 600px) {
-  .cards.feature > ul {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* subtle outward hover on the whole tile */
+.cards.feature > ul > li:hover,
+.cards.feature > ul > li:focus-within {
+  transform: translateY(-4px);
 }
 
 @media (width >= 900px) {
   .cards.feature > ul {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
