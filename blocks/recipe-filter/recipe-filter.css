@@ -1,0 +1,80 @@
+.recipe-filter {
+  margin: 24px 0;
+}
+
+.recipe-filter .recipe-filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* search box */
+.recipe-filter .recipe-filter-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid rgb(0 0 0 / 25%);
+  border-radius: 4px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+}
+
+.recipe-filter .recipe-filter-search input:focus {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 1px;
+  border-color: var(--brand-red);
+}
+
+/* facet groups */
+.recipe-filter .recipe-filter-facets {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.recipe-filter .recipe-filter-group {
+  margin: 0;
+  border: 1px solid var(--light-color);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+
+.recipe-filter .recipe-filter-group legend {
+  padding: 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.recipe-filter .recipe-filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.recipe-filter .recipe-filter-group input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand-red);
+}
+
+.recipe-filter .recipe-filter-count {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  color: rgb(0 0 0 / 60%);
+}
+
+@media (width >= 900px) {
+  .recipe-filter .recipe-filter-facets {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+  }
+}
