@@ -47,6 +47,6 @@ export default function parse(element, { document }) {
     return;
   }
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'carousel-hero', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Carousel (hero)', cells });
   element.replaceWith(block);
 }

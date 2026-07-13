@@ -1,0 +1,334 @@
+/* Base carousel: horizontal scroll-snap track with prev/next arrows and
+   pagination dots. Variants (.hero, .recipe) tune sizing and chrome. */
+
+.carousel .carousel-slides-container {
+  position: relative;
+}
+
+.carousel .carousel-slides,
+.carousel .carousel-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel .carousel-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel .carousel-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel .carousel-slide {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+/* Navigation arrows -- red circles with a white chevron */
+.carousel .carousel-navigation-buttons {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel .carousel-navigation-buttons button {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 5px solid transparent;
+  border-radius: 16px;
+  background-color: var(--brand-red);
+  transform: translateY(-50%);
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.carousel .carousel-navigation-buttons button.slide-prev {
+  left: 16px;
+}
+
+.carousel .carousel-navigation-buttons button.slide-next {
+  right: 16px;
+}
+
+.carousel .carousel-navigation-buttons button:disabled {
+  opacity: 0.33;
+  cursor: default;
+}
+
+/* White chevron drawn from two rotated bars */
+.carousel .carousel-navigation-buttons button::before,
+.carousel .carousel-navigation-buttons button::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 10.5px;
+  height: 1.6px;
+  background-color: rgb(255 255 255);
+}
+
+.carousel .carousel-navigation-buttons button.slide-prev::before {
+  top: calc(50% - 3.5px);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.carousel .carousel-navigation-buttons button.slide-prev::after {
+  top: calc(50% + 3.5px);
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.carousel .carousel-navigation-buttons button.slide-next::before {
+  top: calc(50% - 3.5px);
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.carousel .carousel-navigation-buttons button.slide-next::after {
+  top: calc(50% + 3.5px);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Pagination dots */
+.carousel .carousel-slide-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  line-height: 0;
+}
+
+.carousel .carousel-slide-indicator {
+  margin: 0 3px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel .carousel-slide-indicator button {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 100%;
+  background-color: rgb(170 170 170);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carousel .carousel-slide-indicator button:disabled,
+.carousel .carousel-slide-indicator button:hover,
+.carousel .carousel-slide-indicator button:focus-visible {
+  background-color: rgb(0 0 0);
+}
+
+/* ==========================================================================
+   Variant: hero — full-bleed banner carousel.
+   Values extracted from source hero (tiny-slider).
+   ========================================================================== */
+
+/* Break the block out of the section's max-width to be full-bleed */
+.carousel.hero {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.carousel.hero .carousel-slides-container {
+  overflow: hidden;
+  background-color: rgb(221 221 221);
+}
+
+.carousel.hero .carousel-slide {
+  width: 100%;
+  aspect-ratio: 375 / 347; /* mobile banner strip (~1.08:1) */
+}
+
+/*
+ * Banner strip. The source art-directs a near-square image on mobile and a
+ * wide image on desktop; authored content only carries one image, so the
+ * slide keeps a fixed banner aspect ratio and covers with the image to match.
+ */
+.carousel.hero .carousel-slide-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.carousel.hero .carousel-slide-image picture,
+.carousel.hero .carousel-slide-image p {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 0;
+}
+
+.carousel.hero .carousel-slide-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * The source banners are fully clickable images with no visible caption box.
+ * The authored second cell only carries the destination link, so overlay it
+ * transparently across the whole slide instead of rendering a caption.
+ */
+.carousel.hero .carousel-slide-content {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel.hero .carousel-slide-content p {
+  margin: 0;
+  height: 100%;
+}
+
+.carousel.hero .carousel-slide-content a,
+.carousel.hero .carousel-slide-content a:any-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  color: transparent;
+  text-decoration: none;
+}
+
+/* Pagination dots overlaid at the bottom of the banner */
+.carousel.hero nav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+@media (width >= 900px) {
+  .carousel.hero .carousel-slide {
+    aspect-ratio: 1430 / 475; /* desktop banner strip (~3.01:1) */
+  }
+}
+
+/* ==========================================================================
+   Variant: recipe — recipe card carousel.
+   Source (".featureditemlistautomatic"): 3 cards per view on desktop, each a
+   ~3:2 recipe image with a bold black title below. 16px gap, no card chrome.
+   ========================================================================== */
+
+.carousel.recipe .carousel-slides {
+  gap: 16px;
+}
+
+/* One card per view on mobile */
+.carousel.recipe .carousel-slide {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Recipe image: fixed 3:2 crop, covered */
+.carousel.recipe .carousel-slide-image {
+  display: block;
+  margin: 0;
+}
+
+.carousel.recipe .carousel-slide-image picture,
+.carousel.recipe .carousel-slide-image p {
+  display: block;
+  margin: 0;
+  line-height: 0;
+}
+
+.carousel.recipe .carousel-slide-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 389 / 259;
+  object-fit: cover;
+}
+
+/* Card title below the image */
+.carousel.recipe .carousel-slide-content {
+  margin: 0;
+  padding: 0;
+}
+
+.carousel.recipe .carousel-slide-content p {
+  margin: 16px 0 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel.recipe .carousel-slide-content a,
+.carousel.recipe .carousel-slide-content a:any-link {
+  display: block;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  text-decoration: none;
+}
+
+.carousel.recipe .carousel-slide-content a:hover,
+.carousel.recipe .carousel-slide-content a:focus-visible {
+  color: var(--brand-red);
+}
+
+/* recipe arrows sit centered on the image row (title sits below) */
+.carousel.recipe .carousel-navigation-buttons button {
+  top: calc(50% - 20px);
+}
+
+.carousel.recipe .carousel-navigation-buttons button.slide-prev {
+  left: 0;
+}
+
+.carousel.recipe .carousel-navigation-buttons button.slide-next {
+  right: 0;
+}
+
+/* pagination dots centered below the track */
+.carousel.recipe nav {
+  margin-top: 16px;
+}
+
+.carousel.recipe .carousel-slide-indicators {
+  padding: 16px 0;
+}
+
+/* Tablet: ~2 cards per view */
+@media (width >= 600px) {
+  .carousel.recipe .carousel-slide {
+    flex: 0 0 calc((100% - 16px) / 2);
+  }
+
+  .carousel.recipe .carousel-navigation-buttons button.slide-prev {
+    left: -32px;
+  }
+
+  .carousel.recipe .carousel-navigation-buttons button.slide-next {
+    right: -32px;
+  }
+}
+
+/* Desktop: 3 cards per view */
+@media (width >= 900px) {
+  .carousel.recipe .carousel-slide {
+    flex: 0 0 calc((100% - 32px) / 3);
+  }
+}

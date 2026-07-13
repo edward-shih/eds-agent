@@ -67,7 +67,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document, { name: "carousel-hero", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Carousel (hero)", cells });
     element.replaceWith(block);
   }
 
@@ -96,7 +96,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document, { name: "cards-segments", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Cards (segments)", cells });
     element.replaceWith(block);
   }
 
@@ -117,7 +117,7 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [[image || "", copyCell]];
-    const block = WebImporter.Blocks.createBlock(document, { name: "columns-imagecopy", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Columns (imagecopy)", cells });
     element.replaceWith(block);
   }
 
@@ -148,7 +148,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document, { name: "cards-logos", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Cards (logos)", cells });
     element.replaceWith(block);
   }
 
@@ -181,7 +181,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document, { name: "carousel-recipe", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Carousel (recipe)", cells });
     element.replaceWith(block);
   }
 
@@ -209,7 +209,7 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [[copyCell, ctaCell]];
-    const block = WebImporter.Blocks.createBlock(document, { name: "columns-signup", cells });
+    const block = WebImporter.Blocks.createBlock(document, { name: "Columns (signup)", cells });
     element.replaceWith(block);
   }
 
@@ -225,7 +225,13 @@ var CustomImportScript = (() => {
         "#onetrust-consent-sdk",
         "#CybotCookiebotDialog",
         '[class*="cookie-consent"]',
-        '[id*="cookie-consent"]'
+        '[id*="cookie-consent"]',
+        // Contact form JS-only chrome: hidden success/error toasts and spinner.
+        // The migrated form block renders its own status message, so these
+        // source-only elements must not survive into imported content.
+        ".message",
+        ".message-error",
+        ".loader"
       ]);
     }
     if (hookName === TransformHook.afterTransform) {

@@ -30,6 +30,6 @@ export default function parse(element, { document }) {
   // Single 2-column row: [image] | [heading + paragraphs + CTA].
   const cells = [[image || '', copyCell]];
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'columns-imagecopy', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Columns (imagecopy)', cells });
   element.replaceWith(block);
 }

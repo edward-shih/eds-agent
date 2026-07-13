@@ -40,6 +40,6 @@ export default function parse(element, { document }) {
   // Single 2-column row: [heading + paragraph] | [Sign Up CTA].
   const cells = [[copyCell, ctaCell]];
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'columns-signup', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Columns (signup)', cells });
   element.replaceWith(block);
 }

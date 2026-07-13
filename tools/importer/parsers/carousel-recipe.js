@@ -45,6 +45,6 @@ export default function parse(element, { document }) {
     return;
   }
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'carousel-recipe', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'Carousel (recipe)', cells });
   element.replaceWith(block);
 }
